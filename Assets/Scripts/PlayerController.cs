@@ -1,41 +1,42 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(UnitMotor))]
-public class PlayerController : MonoBehaviour
+namespace Geekbrains
 {
-	[SerializeField] private LayerMask _movementMask;
-
-	private Camera _cam;
-	private UnitMotor _motor;
-
-	private void Start()
+	[RequireComponent(typeof(UnitMotor))]
+	public class PlayerController : MonoBehaviour
 	{
-		_cam = Camera.main;
-		_motor = GetComponent<UnitMotor>();
-		_cam.GetComponent<CameraController>().Target = transform;
-	}
+		[SerializeField] private LayerMask _movementMask;
 
-	private void Update()
-	{
-		if (Input.GetMouseButtonDown(1))
+		private Camera _cam;
+		private UnitMotor _motor;
+
+		private void Start()
 		{
-			Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-
-			if (Physics.Raycast(ray, out hit, 100f, _movementMask))
-			{
-				_motor.MoveToPoint(hit.point);
-			}
+			_cam = Camera.main;
+			_motor = GetComponent<UnitMotor>();
+			_cam.GetComponent<CameraController>().Target = transform;
 		}
 
-		if (Input.GetMouseButtonDown(0))
+		private void Update()
 		{
-			Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-
-			if (Physics.Raycast(ray, out hit, 100f))
+			if (Input.GetMouseButtonDown(1))
 			{
+				var ray = _cam.ScreenPointToRay(Input.mousePosition);
 
+				if (Physics.Raycast(ray, out var hit, 100f, _movementMask))
+				{
+					_motor.MoveToPoint(hit.point);
+				}
+			}
+
+			if (!Input.GetMouseButtonDown(0)) return;
+			{
+				var ray = _cam.ScreenPointToRay(Input.mousePosition);
+
+				if (Physics.Raycast(ray, out var hit, 100f))
+				{
+
+				}
 			}
 		}
 	}

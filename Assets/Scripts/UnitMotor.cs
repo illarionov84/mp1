@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class UnitMotor : MonoBehaviour
+namespace Geekbrains
 {
-	private NavMeshAgent _agent;
-
-	private void Start()
+	[RequireComponent(typeof(NavMeshAgent))]
+	public class UnitMotor : MonoBehaviour
 	{
-		_agent = GetComponent<NavMeshAgent>();
-	}
+		private NavMeshAgent _agent;
 
-	public void MoveToPoint(Vector3 point)
-	{
-		_agent.SetDestination(point);
+		private void Start()
+		{
+			_agent = GetComponent<NavMeshAgent>();
+		}
+
+		public void MoveToPoint(Vector3 point)
+		{
+			_agent.SetDestination(point);
+		}
 	}
 }
