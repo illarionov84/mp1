@@ -3,14 +3,51 @@ using UnityEngine.Networking;
 
 namespace Geekbrains
 {
-	public class UnitLoader : NetworkBehaviour
+	public class PlayerLoader : NetworkBehaviour
 	{
-		[SerializeField] private GameObject _unitPrefab;
+		[SerializeField] GameObject _unitPrefab;
+		[SerializeField] PlayerController _controller;
 
-		public override void OnStartServer()
+		[SyncVar(hook = nameof(HookUnitIdentity))] NetworkIdentity _unitIdentity;
+
+
+		private void Start()
 		{
-			var unit = Instantiate(_unitPrefab);
-			NetworkServer.SpawnWithClientAuthority(unit, gameObject);
+			Debug.Log($"{nameof(isServer)} =  {isServer}");
+		}
+
+		public override void OnStartAuthority()
+		{
+			if (isServer)
+			{
+				SpawnPlayer(true);
+			}
+			else
+			{
+				CmdCreatePlayer();
+			}
+		}
+
+		[Command]
+		public void CmdCreatePlayer()
+		{
+			SpawnPlayer(false);
+		}
+
+		[ClientCallback]
+		private void HookUnitIdentity(NetworkIdentity unit)
+		{
+			if (!isLocalPlayer) return;
+			_unitIdentity = unit;
+			_controller.SetCharacter(unit.GetComponent<Character>(), true);
+		}
+
+		public void SpawnPlayer(bool isLocalPlayer)
+		{
+			var unit = Instantiate(_unitPrefab, transform.position, Quaternion.identity);
+			NetworkServer.Spawn(unit);
+			_unitIdentity = unit.GetComponent<NetworkIdentity>();
+			_controller.SetCharacter(unit.GetComponent<Character>(), isLocalPlayer);
 		}
 	}
 }

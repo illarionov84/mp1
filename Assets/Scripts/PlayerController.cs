@@ -1,43 +1,49 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Geekbrains
 {
 	[RequireComponent(typeof(UnitMotor))]
-	public class PlayerController : MonoBehaviour
+	public class PlayerController : NetworkBehaviour
 	{
 		[SerializeField] private LayerMask _movementMask;
 
+		private Character _character;
 		private Camera _cam;
-		private UnitMotor _motor;
 
-		private void Start()
+		private void Awake()
 		{
 			_cam = Camera.main;
-			_motor = GetComponent<UnitMotor>();
-			_cam.GetComponent<CameraController>().Target = transform;
+		}
+		
+		public void SetCharacter(Character character, bool isLocalPlayer)
+		{
+			_character = character;
+			if (isLocalPlayer) _cam.GetComponent<CameraController>().Target = character.transform;
 		}
 
 		private void Update()
 		{
-			if (Input.GetMouseButtonDown(1))
+			if (!isLocalPlayer) return;
+			if (_character == null) return;
+			if (!Input.GetMouseButtonDown(1)) return;
+			var ray = _cam.ScreenPointToRay(Input.mousePosition);
+
+			if (Physics.Raycast(ray, out var hit, 100f, _movementMask))
 			{
-				var ray = _cam.ScreenPointToRay(Input.mousePosition);
-
-				if (Physics.Raycast(ray, out var hit, 100f, _movementMask))
-				{
-					_motor.MoveToPoint(hit.point);
-				}
+				CmdSetMovePoint(hit.point);
 			}
-
-			if (!Input.GetMouseButtonDown(0)) return;
-			{
-				var ray = _cam.ScreenPointToRay(Input.mousePosition);
-
-				if (Physics.Raycast(ray, out var hit, 100f))
-				{
-
-				}
-			}
+		}
+		
+		[Command]
+		public void CmdSetMovePoint(Vector3 point)
+		{
+			_character.SetMovePoint(point);
+		}
+		
+		private void OnDestroy()
+		{
+			if (_character != null) Destroy(_character.gameObject);
 		}
 	}
 }

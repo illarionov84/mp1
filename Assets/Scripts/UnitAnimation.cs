@@ -16,7 +16,7 @@ namespace Geekbrains
 
 		private void FixedUpdate()
 		{
-			_animator.SetBool("Moving", _agent.hasPath);
+			_animator.SetBool("Move", _agent.hasPath);
 		}
 
 		//Placeholder functions for Animation events
