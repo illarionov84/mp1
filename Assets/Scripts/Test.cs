@@ -9,6 +9,13 @@ namespace Geekbrains
 	{
 		Dictionary<Type, object> _managers = new Dictionary<Type, object>();
 
+		private int _hp;
+
+		public int Hp
+		{
+			set => _hp = value;
+		}
+
 		public void Registr(object o)
 		{
 			_managers.Add(o.GetType(), o);

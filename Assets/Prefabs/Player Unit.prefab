@@ -834,6 +834,8 @@ GameObject:
   - component: {fileID: 143014178148114846}
   - component: {fileID: 4172811981118923274}
   - component: {fileID: 65173918640044986}
+  - component: {fileID: 606904774445154825}
+  - component: {fileID: 7495734921706191185}
   m_Layer: 10
   m_Name: Player Unit
   m_TagString: Untagged
@@ -890,8 +892,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01251ca5c16da63468dce7d5582d3b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motor: {fileID: 114647211022153060}
-  myStats: {fileID: 4172811981118923274}
+  InteractionTransform: {fileID: 4523222246456026}
+  Radius: 2
+  Motor: {fileID: 114647211022153060}
+  MyStats: {fileID: 4172811981118923274}
   _reviveDelay: 5
   _gfx: {fileID: 1998129012191778}
 --- !u!114 &114647211022153060
@@ -1045,9 +1049,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f0ae9072a51b941afc9997320a4d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 300
   Damage:
-    _baseValue: 0
+    _baseValue: 20
 --- !u!65 &65173918640044986
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1061,6 +1065,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &606904774445154825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447184397885296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b4b988db9c87b45bc1bc6fbf29df82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackSpeed: 1
+--- !u!114 &7495734921706191185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447184397885296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e236ebc49d63fc4fb8f6ceb43334f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 95821193614647034}
+  _unit: {fileID: 7276133346065930589}
+  _combat: {fileID: 606904774445154825}
 --- !u!1 &1461125301504114
 GameObject:
   m_ObjectHideFlags: 0
