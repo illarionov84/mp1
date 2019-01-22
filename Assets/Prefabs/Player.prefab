@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 114513586844110316}
   - component: {fileID: 114042316723602648}
   - component: {fileID: 114986362945305988}
+  - component: {fileID: 2832873332674113656}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -78,9 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dffb2bffef79c543872bddb05640790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitPrefab: {fileID: 1447184397885296, guid: f3c30ab9dad902742aa53f39b6a81fc1,
-    type: 3}
-  _controller: {fileID: 114986362945305988}
+  unitPrefab: {fileID: 1447184397885296, guid: f3c30ab9dad902742aa53f39b6a81fc1, type: 3}
+  controller: {fileID: 114986362945305988}
 --- !u!114 &114986362945305988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,3 +96,17 @@ MonoBehaviour:
   _movementMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &2832873332674113656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571480409289068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa9b5c3e469cace458bf5aa9fc870121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DropPoint: {fileID: 0}
+  Space: 6
