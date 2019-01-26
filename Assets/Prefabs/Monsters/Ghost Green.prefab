@@ -497,6 +497,7 @@ GameObject:
   - component: {fileID: 114051401886405744}
   - component: {fileID: 114748287497134970}
   - component: {fileID: 65625546188081820}
+  - component: {fileID: 1048015315705236169}
   m_Layer: 0
   m_Name: Ghost Green
   m_TagString: Untagged
@@ -677,8 +678,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb534c09b574a64c8f6d9c48883ab4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motor: {fileID: 114164667048318260}
-  myStats: {fileID: 114748287497134970}
+  InteractionTransform: {fileID: 4346772114021060}
+  Radius: 2
+  Motor: {fileID: 0}
+  MyStats: {fileID: 0}
   _moveRadius: 10
   _minMoveDelay: 4
   _maxMoveDelay: 12
@@ -741,3 +744,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.5, z: 1}
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &1048015315705236169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922813405114554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2d08037d44bc145897d02f144bbeb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropItems:
+  - Item: {fileID: 11400000, guid: d47db93876930b24fac57701e69f0f27, type: 2}
+    Rate: 75.6
+  - Item: {fileID: 11400000, guid: 16bec852d05c0f44bb4b44eab7eeb9d1, type: 2}
+    Rate: 52.6
