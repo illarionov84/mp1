@@ -895,10 +895,10 @@ MonoBehaviour:
   InteractionTransform: {fileID: 4523222246456026}
   Radius: 2
   Motor: {fileID: 114647211022153060}
-  MyStats: {fileID: 4172811981118923274}
+  _stats: {fileID: 4172811981118923274}
   _reviveDelay: 5
   _gfx: {fileID: 1998129012191778}
-  Inventory: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!114 &114647211022153060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,6 +1053,10 @@ MonoBehaviour:
   _maxHealth: 300
   Damage:
     _baseValue: 20
+  Armor:
+    _baseValue: 0
+  MoveSpeed:
+    _baseValue: 5
 --- !u!65 &65173918640044986
 BoxCollider:
   m_ObjectHideFlags: 0
