@@ -1,36 +1,32 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Geekbrains
-{
-	[RequireComponent(typeof(UnitStats))]
-	public class Combat : NetworkBehaviour
-	{
-		[SerializeField] private float _attackSpeed = 1f;
+[RequireComponent(typeof(UnitStats))]
+public class Combat : NetworkBehaviour {
 
-		private UnitStats _myStats;
-		private float _attackCooldown = 0f;
+    [SerializeField] float attackSpeed = 1f;
 
-		public delegate void CombatDenegate();
-		[SyncEvent] public event CombatDenegate EventOnAttack;
+    UnitStats myStats;
+    float attackCooldown = 0f;
 
-		void Start()
-		{
-			_myStats = GetComponent<UnitStats>();
-		}
+    public delegate void CombatDenegate();
+    [SyncEvent] public event CombatDenegate EventOnAttack;
 
-		private void Update()
-		{
-			if (_attackCooldown > 0) _attackCooldown -= Time.deltaTime;
-		}
-
-		public bool Attack(UnitStats targetStats)
-		{
-			if (!(_attackCooldown <= 0)) return false;
-			targetStats.TakeDamage(_myStats.Damage.GetValue());
-			EventOnAttack?.Invoke();
-			_attackCooldown = 1f / _attackSpeed;
-			return true;
-		}
+    void Start() {
+        myStats = GetComponent<UnitStats>();
 	}
+
+    private void Update() {
+        if (attackCooldown > 0) attackCooldown -= Time.deltaTime;
+    }
+
+    public bool Attack(UnitStats targetStats) {
+        if (attackCooldown <= 0) {
+            targetStats.TakeDamage(myStats.damage.GetValue());
+            EventOnAttack();
+            attackCooldown = 1f / attackSpeed;
+            return true;
+        }
+        return false;
+    }
 }

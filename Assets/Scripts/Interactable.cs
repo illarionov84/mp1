@@ -1,26 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Geekbrains
-{
-	public class Interactable : NetworkBehaviour
-	{
-		public Transform InteractionTransform;
-		public float Radius = 2f;
+public class Interactable : NetworkBehaviour {
 
-		private void OnValidate()
-		{
-			InteractionTransform = transform;
-		}
+    public Transform interactionTransform;
+    public float radius = 2f;
+    
+    bool _hasInteract = true;
+    public bool hasInteract {
+        get { return _hasInteract; }
+        protected set { _hasInteract = value; }
+    }
 
-		public bool HasInteract { get; protected set; } = true;
+    public virtual bool Interact(GameObject user) {
+        // override interaction
+        return false;
+    }
 
-		public virtual bool Interact(GameObject user) => false;
-
-		protected virtual void OnDrawGizmosSelected()
-		{
-			Gizmos.color = Color.yellow;
-			Gizmos.DrawWireSphere(InteractionTransform.position, Radius);
-		}
-	}
+    protected virtual void OnDrawGizmosSelected() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(interactionTransform.position, radius);
+    }
 }

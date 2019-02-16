@@ -1,35 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Geekbrains
-{
-	public class UnitAnimation : MonoBehaviour
-	{
-		[SerializeField] private Animator _animator;
-		[SerializeField] private NavMeshAgent _agent;
+public class UnitAnimation : MonoBehaviour {
 
-		private void Start()
-		{
-			_animator = GetComponent<Animator>();
-			_agent = GetComponentInParent<NavMeshAgent>();
-		}
+    [SerializeField] Animator animator;
+    [SerializeField] NavMeshAgent agent;
 
-		private void FixedUpdate()
-		{
-			_animator.SetBool("Move", _agent.velocity.magnitude != 0);
-		}
+    void FixedUpdate() {
+        if (agent.velocity.magnitude == 0) {
+            animator.SetBool("Move", false);
+        } else {
+            animator.SetBool("Move", true);
+        }
+    }
 
-		//Placeholder functions for Animation events
-		void Hit()
-		{
-		}
+    //Placeholder functions for Animation events
+    void Hit() {
+    }
 
-		void FootR()
-		{
-		}
+    void FootR() {
+    }
 
-		void FootL()
-		{
-		}
-	}
+    void FootL() {
+    }
 }

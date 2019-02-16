@@ -1,55 +1,59 @@
 ﻿using UnityEngine.Networking;
 
-namespace Geekbrains
-{
-	public class Equipment : NetworkBehaviour
-	{
-		public event SyncList<Item>.SyncListChanged onItemChanged;
-		public SyncListItem items = new SyncListItem();
+public class Equipment : NetworkBehaviour {
 
-		public Player Player;
+    public event SyncList<Item>.SyncListChanged onItemChanged;
+    public SyncListItem items = new SyncListItem();
 
-		public override void OnStartLocalPlayer()
-		{
-			items.Callback += ItemChanged;
-		}
+    public Player player;
 
-		private void ItemChanged(SyncList<Item>.Operation op, int itemIndex)
-		{
-			onItemChanged?.Invoke(op, itemIndex);
-		}
+    UserData data;
 
-		public EquipmentItem EquipItem(EquipmentItem item)
-		{
-			EquipmentItem oldItem = null;
-			for (var i = 0; i < items.Count; i++)
-			{
-				if (((EquipmentItem)items[i]).EquipSlot == item.EquipSlot)
-				{
-					oldItem = (EquipmentItem)items[i];
-					oldItem.Unequip(Player); 
-					items.RemoveAt(i);
-					break;
-				}
-			}
-			items.Add(item);
-			item.Equip(Player);
-			return oldItem;
-		}
+    public void Load(UserData data) {
+        this.data = data;
+        for (int i = 0; i < data.equipment.Count; i++) {
+            EquipmentItem item = (EquipmentItem)ItemBase.GetItem(data.equipment[i]);
+            items.Add(item);
+            item.Equip(player);
+        }
+    }
 
-		public void UnequipItem(Item item)
-		{
-			CmdUnequipItem(items.IndexOf(item));
-		}
+    public override void OnStartLocalPlayer() {
+        items.Callback += ItemChanged;
+    }
 
-		[Command]
-		void CmdUnequipItem(int index)
-		{
-			if (items[index] != null && Player.Inventory.AddItem(items[index]))
-			{
-				((EquipmentItem)items[index]).Unequip(Player);
-				items.RemoveAt(index);
-			}
-		}
-	}
+    private void ItemChanged(SyncList<Item>.Operation op, int itemIndex) {
+        onItemChanged(op, itemIndex);
+    }
+
+    public EquipmentItem EquipItem(EquipmentItem item) {
+        EquipmentItem oldItem = null;
+        for (int i = 0; i < items.Count; i++) {
+            if (((EquipmentItem)items[i]).equipSlot == item.equipSlot) {
+                oldItem = (EquipmentItem)items[i];
+                oldItem.Unequip(player);
+                data.equipment.Remove(ItemBase.GetItemId(items[i]));
+                items.RemoveAt(i);
+                break;
+            }
+        }
+        items.Add(item);
+        item.Equip(player);
+        data.equipment.Add(ItemBase.GetItemId(item));
+
+        return oldItem;
+    }
+
+    public void UnequipItem(Item item) {
+        CmdUnequipItem(items.IndexOf(item));
+    }
+
+    [Command]
+    void CmdUnequipItem(int index) {
+        if (items[index] != null && player.inventory.AddItem(items[index])) {
+            ((EquipmentItem)items[index]).Unequip(player);
+            data.equipment.Remove(ItemBase.GetItemId(items[index]));
+            items.RemoveAt(index);
+        }
+    }
 }

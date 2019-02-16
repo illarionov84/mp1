@@ -1,40 +1,31 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Geekbrains
-{
-	public class UnitStats : NetworkBehaviour
-	{
-		[SerializeField] private int _maxHealth;
-		[SyncVar] private int _curHealth;
+public class UnitStats : NetworkBehaviour {
 
-		public Stat Damage;
-		public Stat Armor; // защита
-		public Stat MoveSpeed; // скорость перемещения
+    [SerializeField] protected int maxHealth;
+    [SyncVar] int _curHealth;
 
-		public int CurHealth => _curHealth;
+    public Stat damage;
+    public Stat armor;
+    public Stat moveSpeed;
 
-		public override void OnStartServer()
-		{
-			SetHealthRate(1);
-		}
+    public virtual int curHealth {
+        get { return _curHealth; }
+        protected set { _curHealth = value; }
+    }
 
-		public virtual void TakeDamage(int damage)
-		{
-			damage -= Armor.GetValue();
-			if (damage > 0)
-			{
-				_curHealth -= damage;
-				if (_curHealth <= 0)
-				{
-					_curHealth = 0;
-				}
-			}
-		}
+    public virtual void TakeDamage(int damage) {
+        damage -= armor.GetValue();
+        if (damage > 0) {
+            curHealth -= damage;
+            if (curHealth <= 0) {
+                curHealth = 0;
+            }
+        }
+    }
 
-		public void SetHealthRate(float rate)
-		{
-			_curHealth = rate == 0 ? 0 : (int)(_maxHealth * rate);
-		}
-	}
+    public void SetHealthRate(float rate) {
+        curHealth = rate == 0 ? 0 : (int)(maxHealth / rate);
+    }
 }

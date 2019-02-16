@@ -1,50 +1,40 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Geekbrains
-{
-	[System.Serializable]
-	public class Stat
-	{
-		public delegate void StatChanged(int value);
-		public event StatChanged OnStatChanged;
+[System.Serializable]
+public class Stat {
 
-		[SerializeField] private int _baseValue;
-		public int BaseValue
-		{
-			get => _baseValue;
-			set
-			{
-				_baseValue = value;
-				OnStatChanged?.Invoke(GetValue());
-			}
-		}
+    public delegate void StatChanged(int value);
+    public event StatChanged onStatChanged;
 
-		private readonly List<int> _modifiers = new List<int>();
+    [SerializeField] int _baseValue;
+    public int baseValue {
+        get { return _baseValue; }
+        set {
+            _baseValue = value;
+            if (onStatChanged != null) onStatChanged(GetValue());
+        }
+    }
 
-		public int GetValue()
-		{
-			var finalValue = _baseValue;
-			_modifiers.ForEach(x => finalValue += x);
-			return finalValue;
-		}
+    private List<int> modifiers = new List<int>();
 
-		public void AddModifier(int modifier)
-		{
-			if (modifier != 0)
-			{
-				_modifiers.Add(modifier);
-				OnStatChanged?.Invoke(GetValue());
-			}
-		}
+	public int GetValue() {
+        int finalValue = _baseValue;
+        modifiers.ForEach(x => finalValue += x);
+        return finalValue;
+    }
 
-		public void RemoveModifier(int modifier)
-		{
-			if (modifier != 0)
-			{
-				_modifiers.Remove(modifier);
-				OnStatChanged?.Invoke(GetValue());
-			}
-		}
-	}
+    public void AddModifier( int modifier) {
+        if (modifier != 0) {
+            modifiers.Add(modifier);
+            if (onStatChanged != null) onStatChanged(GetValue());
+        }
+    }
+
+    public void RemoveModifier(int modifier) {
+        if (modifier != 0) {
+            modifiers.Remove(modifier);
+            if (onStatChanged != null) onStatChanged(GetValue());
+        }
+    }
 }

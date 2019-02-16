@@ -1,65 +1,54 @@
 ﻿using UnityEngine;
 
-namespace Geekbrains
-{
-	public class InventoryUI : MonoBehaviour
-	{
-		#region Singleton
-		public static InventoryUI Instance;
+public class InventoryUI : MonoBehaviour {
 
-		private void Awake()
-		{
-			_inventoryUi.SetActive(false);
-			if (Instance != null)
-			{
-				Debug.LogError("More than one instance of InventoryUI found!");
-				return;
-			}
-			Instance = this;
-		}
-		#endregion
+    #region Singleton
+    public static InventoryUI instance;
 
-		[SerializeField] private GameObject _inventoryUi;
-		[SerializeField] private Transform _itemsParent;
-		[SerializeField] private InventorySlot _slotPrefab;
+    private void Awake() {
+        if (instance != null) {
+            Debug.LogError("More than one instance of InventoryUI found!");
+            return;
+        }
+        instance = this;
+    }
+    #endregion
 
-		private InventorySlot[] _slots;
-		private Inventory _inventory;
+    [SerializeField] GameObject inventoryUI;
+    [SerializeField] Transform itemsParent;
+    [SerializeField] InventorySlot slotPrefab;
 
-		private void Update()
-		{
-			if (Input.GetButtonDown("Inventory"))
-			{
-				_inventoryUi.SetActive(!_inventoryUi.activeSelf);
-			}
-		}
+    InventorySlot[] slots;
+    Inventory inventory;
 
-		public void SetInventory(Inventory newInventory)
-		{
-			_inventory = newInventory;
-			_inventory.OnItemChanged += ItemChanged;
-			var childs = _itemsParent.GetComponentsInChildren<InventorySlot>();
-			foreach (var child in childs)
-				Destroy(child.gameObject);
+    private void Start() {
+        inventoryUI.SetActive(false);
+    }
 
-			_slots = new InventorySlot[_inventory.Space];
-			for (var i = 0; i < _inventory.Space; i++)
-			{
-				_slots[i] = Instantiate(_slotPrefab, _itemsParent);
-				_slots[i].Inventory = _inventory;
-				if (i < _inventory.Items.Count) _slots[i].SetItem(_inventory.Items[i]);
-				else _slots[i].ClearSlot();
-			}
-		}
+    private void Update() {
+        if (Input.GetButtonDown("Inventory")) {
+            inventoryUI.SetActive(!inventoryUI.activeSelf);
+        }
+    }
 
-		private void ItemChanged(UnityEngine.Networking.SyncList<Item>.Operation op, int itemIndex)
-		{
-			for (var i = 0; i < _slots.Length; i++)
-			{
-				if (i < _inventory.Items.Count) _slots[i].SetItem(_inventory.Items[i]);
-				else _slots[i].ClearSlot();
-			}
-		}
-	}
+    public void SetInventory(Inventory newInventory) {
+        inventory = newInventory;
+        inventory.onItemChanged += ItemChanged;
+        InventorySlot[] childs = itemsParent.GetComponentsInChildren<InventorySlot>();
+        for (int i = 0; i < childs.Length; i++) Destroy(childs[i].gameObject);
+        slots = new InventorySlot[inventory.space];
+        for (int i = 0; i < inventory.space; i++) {
+            slots[i] = Instantiate(slotPrefab, itemsParent);
+            slots[i].inventory = inventory;
+            if (i < inventory.items.Count) slots[i].SetItem(inventory.items[i]);
+            else slots[i].ClearSlot();
+        }
+    }
 
+    private void ItemChanged(UnityEngine.Networking.SyncList<Item>.Operation op, int itemIndex) {
+        for (int i = 0; i < slots.Length; i++) {
+            if (i < inventory.items.Count) slots[i].SetItem(inventory.items[i]);
+            else slots[i].ClearSlot();
+        }
+    }
 }

@@ -1,17 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Geekbrains
-{
-	[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-	public class Item : ScriptableObject
-	{
-		public string Name = "New Item";
-		public Sprite Icon = null;
-		public ItemPickup PickupPrefab;
+[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+public class Item : ScriptableObject {
 
-		public virtual void Use(Player player)
-		{
-			Debug.Log("Using " + name);
-		}
-	}
+    new public string name = "New Item";
+    public Sprite icon = null;
+    public ItemPickup pickupPrefab;
+
+    public virtual void Use(Player player) { }
 }

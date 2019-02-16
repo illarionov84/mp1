@@ -1,37 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Geekbrains
-{
-	[RequireComponent(typeof(Unit))]
-	public class UnitDrop : NetworkBehaviour
-	{
-		[SerializeField] private DropItem[] _dropItems = new DropItem[0];
+[RequireComponent(typeof(Unit))]
+public class UnitDrop : NetworkBehaviour {
 
-		public override void OnStartServer()
-		{
-			GetComponent<Unit>().EventOnDie += Drop;
-		}
+    [SerializeField] DropItem[] dropItems = new DropItem[0];
 
-		private void Drop()
-		{
-			for (var i = 0; i < _dropItems.Length; i++)
-			{
-				if (Random.Range(0, 100f) <= _dropItems[i].Rate)
-				{
-					var pickupItem = Instantiate(_dropItems[i].Item.PickupPrefab, transform.position, Quaternion.Euler(0, Random.Range(0, 360f), 0));
-					pickupItem.Item = _dropItems[i].Item;
-					NetworkServer.Spawn(pickupItem.gameObject);
-				}
-			}
-		}
+    public override void OnStartServer() {
+        GetComponent<Unit>().EventOnDie += Drop;
+    }
 
-		[System.Serializable]
-		struct DropItem
-		{
-			public Item Item;
-			[Range(0f, 100f)]
-			public float Rate;
-		}
-	}
+    private void Drop() {
+        for (int i = 0; i < dropItems.Length; i++) {
+            if (Random.Range(0, 100f) <= dropItems[i].rate) {
+                ItemPickup pickupItem = Instantiate(dropItems[i].item.pickupPrefab, transform.position, Quaternion.Euler(0, Random.Range(0, 360f), 0));
+                pickupItem.item = dropItems[i].item;
+                NetworkServer.Spawn(pickupItem.gameObject);
+            }
+        }
+    }
+
+    [System.Serializable]
+    struct DropItem {
+        public Item item;
+        [Range(0, 100f)]
+        public float rate;
+    }
 }

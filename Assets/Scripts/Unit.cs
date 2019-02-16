@@ -1,132 +1,101 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Geekbrains
-{
-	public class Unit : Interactable
-	{
-		[SerializeField] protected UnitMotor Motor;
-		[SerializeField] protected UnitStats _stats;
+public class Unit : Interactable {
 
-		public UnitStats Stats => _stats;
+    [SerializeField] protected UnitMotor motor;
+    [SerializeField] protected UnitStats _stats;
+    public UnitStats stats { get { return _stats; } }
 
-		protected Interactable Focus;
+    protected Interactable focus;
+    protected bool isDie;
 
-		protected bool IsDead;
+    public delegate void UnitDenegate();
+    public event UnitDenegate EventOnDamage;
+    public event UnitDenegate EventOnDie;
+    public event UnitDenegate EventOnRevive;
 
-		public delegate void UnitDenegate();
-		[SyncEvent] public event UnitDenegate EventOnDamage;
-		[SyncEvent] public event UnitDenegate EventOnDie;
-		[SyncEvent] public event UnitDenegate EventOnRevive;
+    public override void OnStartServer() {
+        motor.SetMoveSpeed(_stats.moveSpeed.GetValue());
+        _stats.moveSpeed.onStatChanged += motor.SetMoveSpeed;
+    }
 
-		public override void OnStartServer()
-		{
-			Motor.SetMoveSpeed(_stats.MoveSpeed.GetValue());
-			_stats.MoveSpeed.OnStatChanged += Motor.SetMoveSpeed;
-		}
+    void Update () {
+        OnUpdate();
+    }
 
-		private void Update()
-		{
-			OnUpdate();
-		}
+    protected virtual void OnLiveUpdate() { }
+    protected virtual void OnDieUpdate() { }
 
-		protected virtual void OnAliveUpdate()
-		{
-		}
+    protected void OnUpdate() {
+        if (isServer) {
+            if (!isDie) {
+                if (_stats.curHealth == 0) Die();
+                else OnLiveUpdate();
+            } else {
+                OnDieUpdate();
+            }
+        }
+    }
 
-		protected virtual void OnDeadUpdate()
-		{
-		}
+    public override bool Interact(GameObject user) {
+        Combat combat = user.GetComponent<Combat>();
+        if (combat != null) {
+            if (combat.Attack(_stats)) {
+                DamageWithCombat(user);
+            }
+            return true;
+        }
+        return base.Interact(user);
+    }
 
-		protected void OnUpdate()
-		{
-			if (!isServer) return;
-			if (!IsDead)
-			{
-				if (_stats.CurHealth == 0) Die();
-				else OnAliveUpdate();
-			}
-			else
-			{
-				OnDeadUpdate();
-			}
-		}
+    protected virtual void DamageWithCombat(GameObject user) {
+        EventOnDamage();
+    }
 
-		/// <summary>
-		/// Установка нового объекта в фокус
-		/// </summary>
-		/// <param name="newFocus"></param>
-		protected virtual void SetFocus(Interactable newFocus)
-		{
-			if (newFocus == Focus) return;
-			Focus = newFocus;
-			Motor.FollowTarget(newFocus);
-		}
+    protected virtual void SetFocus(Interactable newFocus) {
+        if (newFocus != focus) {
+            focus = newFocus;
+            motor.FollowTarget(newFocus);
+        }
+    }
 
-		/// <summary>
-		/// Удаление фокуса
-		/// </summary>
-		protected virtual void RemoveFocus()
-		{
-			Focus = null;
-			Motor.StopFollowingTarget();
-		}
+    protected virtual void RemoveFocus() {
+        focus = null;
+        motor.StopFollowingTarget();
+    }
+    
+    protected virtual void Die() {
+        isDie = true;
+        GetComponent<Collider>().enabled = false;
+        EventOnDie();
+        if (isServer) {
+            hasInteract = false;
+            RemoveFocus();
+            motor.MoveToPoint(transform.position);
+            RpcDie();
+        }
+    }
 
-		[ClientCallback]
-		protected virtual void Die()
-		{
-			IsDead = true;
-			GetComponent<Collider>().enabled = false;
-			if (!isServer) return;
-			HasInteract = false; // с объектом нельзя взаимодействовать
-			RemoveFocus();
-			Motor.MoveToPoint(transform.position);
-			EventOnDie?.Invoke();
-			RpcDie();
-		}
+    [ClientRpc]
+    void RpcDie() {
+        if (!isServer) Die();
+    }
+    
+    protected virtual void Revive() {
+        isDie = false;
+        GetComponent<Collider>().enabled = true;
+        EventOnRevive();
+        if (isServer) {
+            hasInteract = true;
+            _stats.SetHealthRate(1);
+            RpcRevive();
+        }
+    }
 
-		[ClientRpc]
-		private void RpcDie()
-		{
-			if (!isServer) Die();
-		}
-
-		[ClientCallback]
-		protected virtual void Revive()
-		{
-			IsDead = false;
-			GetComponent<Collider>().enabled = true;
-			if (!isServer) return;
-			HasInteract = true; // с объектом можно взаимодействовать
-			_stats.SetHealthRate(1);
-			EventOnRevive?.Invoke();
-			RpcRevive();
-		}
-
-		[ClientRpc]
-		private void RpcRevive()
-		{
-			if (!isServer) Revive();
-		}
-
-		public override bool Interact(GameObject user)
-		{
-			Debug.Log(gameObject.name + " ineracted with " + user.name);
-			Combat combat = user.GetComponent<Combat>();
-			if (combat != null)
-			{
-				if (combat.Attack(_stats))
-				{
-					DamageWithCombat(user);
-				}
-				return true;
-			}
-			return base.Interact(user);
-		}
-
-		protected virtual void DamageWithCombat(GameObject user)
-		{
-			EventOnDamage?.Invoke();
-		}
-	}
+    [ClientRpc]
+    void RpcRevive() {
+        if (!isServer) Revive();
+    }
 }

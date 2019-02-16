@@ -1,35 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Geekbrains
-{
-	public class EquipmentSlot : MonoBehaviour
-	{
-		public Image Icon;
-		public Button UnequipButton;
-		public Equipment Equipment;
+public class EquipmentSlot : MonoBehaviour {
 
-		private Item _item;
+    public Image icon;
+    public Button unequipButton;
+    public Equipment equipment;
 
-		public void SetItem(Item newItem)
-		{
-			_item = newItem;
-			Icon.sprite = _item.Icon;
-			Icon.enabled = true;
-			UnequipButton.interactable = true;
-		}
+    Item item;
 
-		public void ClearSlot()
-		{
-			_item = null;
-			Icon.sprite = null;
-			Icon.enabled = false;
-			UnequipButton.interactable = false;
-		}
+    public void SetItem(Item newItem) {
+        item = newItem;
+        icon.sprite = item.icon;
+        icon.enabled = true;
+        unequipButton.interactable = true;
+    }
 
-		public void Unequip()
-		{
-			Equipment.UnequipItem(_item);
-		}
-	}
+    public void ClearSlot() {
+        item = null;
+        icon.sprite = null;
+        icon.enabled = false;
+        unequipButton.interactable = false;
+    }
+
+    public void Unequip() {
+        equipment.UnequipItem(item);
+    }
 }

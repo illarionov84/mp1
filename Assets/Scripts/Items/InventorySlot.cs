@@ -1,40 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Geekbrains
-{
-	public class InventorySlot : MonoBehaviour
-	{
-		public Image Icon;
-		public Button RemoveButton;
-		public Inventory Inventory;
+public class InventorySlot : MonoBehaviour {
 
-		private Item _item;
+    public Image icon;
+    public Button removeButton;
+    public Inventory inventory;
 
-		public void SetItem(Item newItem)
-		{
-			_item = newItem;
-			Icon.sprite = _item.Icon;
-			Icon.enabled = true;
-			RemoveButton.interactable = true;
-		}
+    Item item;
 
-		public void ClearSlot()
-		{
-			_item = null;
-			Icon.sprite = null;
-			Icon.enabled = false;
-			RemoveButton.interactable = false;
-		}
+    public void SetItem(Item newItem) {
+        item = newItem;
+        icon.sprite = item.icon;
+        icon.enabled = true;
+        removeButton.interactable = true;
+    }
 
-		public void OnRemoveButton()
-		{
-			Inventory.DropItem(_item);
-		}
+    public void ClearSlot() {
+        item = null;
+        icon.sprite = null;
+        icon.enabled = false;
+        removeButton.interactable = false;
+    }
 
-		public void UseItem()
-		{
-			if (_item != null) Inventory.UseItem(_item);
-		}
-	}
+    public void OnRemoveButton() {
+        inventory.DropItem(item);
+    }
+
+    public void UseItem() {
+        if (item != null) inventory.UseItem(item);
+    }
 }

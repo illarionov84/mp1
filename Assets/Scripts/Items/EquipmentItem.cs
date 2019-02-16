@@ -1,46 +1,38 @@
 ﻿using UnityEngine;
 
-namespace Geekbrains
-{
-	[CreateAssetMenu(fileName = "New equipment", menuName = "Inventory/Equipment")]
-	public class EquipmentItem : Item
-	{
-		public EquipmentSlotType EquipSlot;
+[CreateAssetMenu(fileName = "New equipment", menuName = "Inventory/Equipment")]
+public class EquipmentItem : Item {
 
-		public int DamageModifier;
-		public int ArmorModifier;
-		public int SpeedModifier;
+    public EquipmentSlotType equipSlot;
 
-		public override void Use(Player player)
-		{
-			player.Inventory.RemoveItem(this);
-			var oldItem = player.Equipment.EquipItem(this);
-			if (oldItem != null) player.Inventory.AddItem(oldItem);
-			base.Use(player);
-		}
+    public int damageModifier;
+    public int armorModifier;
+    public int speedModifier;
 
-		public virtual void Equip(Player player)
-		{
-			if (player != null)
-			{
-				UnitStats stats = player.Character.Stats;
-				stats.Damage.AddModifier(DamageModifier);
-				stats.Armor.AddModifier(ArmorModifier);
-				stats.MoveSpeed.AddModifier(SpeedModifier);
-			}
-		}
+    public override void Use(Player player) {
+        player.inventory.RemoveItem(this);
+        EquipmentItem oldItem = player.equipment.EquipItem(this);
+        if (oldItem != null) player.inventory.AddItem(oldItem);
+        base.Use(player);
+    }
 
-		public virtual void Unequip(Player player)
-		{
-			if (player != null)
-			{
-				UnitStats stats = player.Character.Stats;
-				stats.Damage.RemoveModifier(DamageModifier);
-				stats.Armor.RemoveModifier(ArmorModifier);
-				stats.MoveSpeed.RemoveModifier(SpeedModifier);
-			}
-		}
-	}
+    public virtual void Equip(Player player) {
+        if (player != null) {
+            UnitStats stats = player.character.stats;
+            stats.damage.AddModifier(damageModifier);
+            stats.armor.AddModifier(armorModifier);
+            stats.moveSpeed.AddModifier(speedModifier);
+        }
+    }
 
-	public enum EquipmentSlotType { Head, Chest, Legs, RighHand, LeftHand }
+    public virtual void Unequip(Player player) {
+        if (player != null) {
+            UnitStats stats = player.character.stats;
+            stats.damage.RemoveModifier(damageModifier);
+            stats.armor.RemoveModifier(armorModifier);
+            stats.moveSpeed.RemoveModifier(speedModifier);
+        }
+    }
 }
+
+public enum EquipmentSlotType { Head, Chest, Legs, RighHand, LeftHand }

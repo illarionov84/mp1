@@ -1,41 +1,33 @@
 ﻿using UnityEngine;
 
-namespace Geekbrains
-{
-	public class UnitTriggerAnimation : MonoBehaviour
-	{
-		[SerializeField] private Animator _animator;
-		[SerializeField] private Unit _unit;
-		[SerializeField] private Combat _combat;
+public class UnitTriggerAnimation : MonoBehaviour {
 
-		private void Start()
-		{
-			_unit.EventOnDamage += Damage;
-			_unit.EventOnDie += Die;
-			_unit.EventOnRevive += Revive;
-			_combat.EventOnAttack += Attack;
-		}
+    [SerializeField] Animator animator;
+    [SerializeField] Unit unit;
+    [SerializeField] Combat combat;
 
-		private void Damage()
-		{
-			_animator.SetTrigger("Damage");
-		}
+    private void Start() {
+        unit.EventOnDamage += Damage;
+        unit.EventOnDie += Die;
+        unit.EventOnRevive += Revive;
+        combat.EventOnAttack += Attack;
+    }
 
-		private void Die()
-		{
-			_animator.SetTrigger("Die");
-		}
+    private void Damage() {
+        animator.SetTrigger("Damage");
+    }
 
-		private void Revive()
-		{
-			_animator.ResetTrigger("Damage");
-			_animator.ResetTrigger("Attack");
-			_animator.SetTrigger("Revive");
-		}
+    private void Die() {
+        animator.SetTrigger("Die");
+    }
 
-		private void Attack()
-		{
-			_animator.SetTrigger("Attack");
-		}
-	}
+    private void Revive() {
+        animator.ResetTrigger("Damage");
+        animator.ResetTrigger("Attack");
+        animator.SetTrigger("Revive");
+    }
+
+    private void Attack() {
+        animator.SetTrigger("Attack");
+    }
 }

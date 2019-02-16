@@ -1,7 +1,8 @@
-﻿namespace Geekbrains
-{
-	public class EnemyStats : UnitStats
-	{
-		
-	}
+﻿using UnityEngine;
+
+public class EnemyStats : UnitStats {
+
+    public override void OnStartServer() {
+        curHealth = maxHealth;
+    }
 }

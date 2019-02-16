@@ -1,69 +1,58 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.EventSystems;
 
-namespace Geekbrains
-{
-	[RequireComponent(typeof(UnitMotor))]
-	public class PlayerController : NetworkBehaviour
-	{
-		[SerializeField] private LayerMask _movementMask;
+public class PlayerController : NetworkBehaviour {
 
-		private Character _character;
-		private Camera _cam;
+    [SerializeField] LayerMask movementMask;
 
-		private void Awake()
-		{
-			_cam = Camera.main;
-		}
-		
-		public void SetCharacter(Character character, bool isLocalPlayer)
-		{
-			_character = character;
-			if (isLocalPlayer) _cam.GetComponent<CameraController>().Target = character.transform;
-		}
+    Character character;
+    Camera cam;
 
-		private void Update()
-		{
-			if (!isLocalPlayer) return;
-			if (_character == null) return;
+    private void Awake() {
+        cam = Camera.main;
+    }
 
-			if (Input.GetMouseButtonDown(0))
-			{
-				if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), 
-					out var hitI, 100f, ~(1 << LayerMask.NameToLayer("Player"))))
-				{
-					var interactable = hitI.collider.GetComponent<Interactable>();
-					if (interactable != null)
-					{
-						CmdSetFocus(interactable.GetComponent<NetworkIdentity>());
-					}
-				}
-			}
+    public void SetCharacter(Character character, bool isLocalPlayer) {
+        this.character = character;
+        if (isLocalPlayer) cam.GetComponent<CameraController>().target = character.transform;
+    }
 
-			if (!Input.GetMouseButtonDown(1)) return;
-			var ray = _cam.ScreenPointToRay(Input.mousePosition);
+    private void Update() {
+        if (isLocalPlayer) {
+            if (character != null && !EventSystem.current.IsPointerOverGameObject()) {
+                // при нажатии на правую кнопку мыши пересещаемся в указанную точку
+                if (Input.GetMouseButtonDown(1)) {
+                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
 
-			if (Physics.Raycast(ray, out var hit, 100f, _movementMask))
-			{
-				CmdSetMovePoint(hit.point);
-			}
-		}
-		
-		[Command]
-		public void CmdSetMovePoint(Vector3 point)
-		{
-			_character.SetMovePoint(point);
-		}
+                    if (Physics.Raycast(ray, out hit, 100f, movementMask)) {
+                        CmdSetMovePoint(hit.point);
+                    }
+                }
+                // при нажатии на левую кнопку мыши взаимодйствуем с объектами
+                if (Input.GetMouseButtonDown(0)) {
+                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
 
-		[Command]
-		public void CmdSetFocus(NetworkIdentity newFocus)
-		{
-			_character.SetNewFocus(newFocus.GetComponent<Interactable>());
-		}
+                    if (Physics.Raycast(ray, out hit, 100f, ~(1 << LayerMask.NameToLayer("Player")))) {
+                        Interactable interactable = hit.collider.GetComponent<Interactable>();
+                        if (interactable != null) {
+                            CmdSetFocus(interactable.GetComponent<NetworkIdentity>());
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-		private void OnDestroy()
-		{
-			if (_character != null) Destroy(_character.gameObject);
-		}
-	}
+    [Command]
+    public void CmdSetMovePoint(Vector3 point) {
+        character.SetMovePoint(point);
+    }
+
+    [Command]
+    public void CmdSetFocus(NetworkIdentity newFocus) {
+        character.SetNewFocus(newFocus.GetComponent<Interactable>());
+    }
 }

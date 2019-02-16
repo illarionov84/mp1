@@ -1,34 +1,26 @@
 ﻿using UnityEngine;
 
-namespace Geekbrains
-{
-	public class ItemPickup : Interactable
-	{
-		public Item Item;
-		public float Lifetime = 25;
+public class ItemPickup : Interactable {
 
-		private void Update()
-		{
-			if (!isServer) return;
-			Lifetime -= Time.deltaTime;
-			if (Lifetime <= 0) Destroy(gameObject);
-		}
+    public Item item;
+    public float lifetime;
 
-		public override bool Interact(GameObject user)
-		{
-			return PickUp(user);
-		}
+    private void Update() {
+        if (isServer) {
+            lifetime -= Time.deltaTime;
+            if (lifetime <= 0) Destroy(gameObject);
+        }
+    }
 
-		public bool PickUp(GameObject user)
-		{
-			var character = user.GetComponent<Character>();
-			if (character != null && character.Player.Inventory.AddItem(Item))
-			{
-				Destroy(gameObject);
-				return true;
-			}
+    public override bool Interact(GameObject user) {
+        return PickUp(user);
+    }
 
-			return false;
-		}
-	}
+    public bool PickUp(GameObject user) {
+        Character character = user.GetComponent<Character>();
+        if (character != null && character.player.inventory.AddItem(item)) {
+            Destroy(gameObject);
+            return true;
+        } else return false;
+    }
 }
