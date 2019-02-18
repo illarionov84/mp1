@@ -58,7 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa78ee26042b9c498df5b75c611cd7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 1447184397885296, guid: f3c30ab9dad902742aa53f39b6a81fc1, type: 2}
   controller: {fileID: 114986362945305988}
   player: {fileID: 114738199309536598}
 --- !u!114 &114075451423875548
@@ -144,8 +143,10 @@ MonoBehaviour:
   armor: 0
   moveSpeed: 0
   level: 0
-  exp: 0
   statPoints: 0
+  exp: 0
+  nextLevelExp: 0
+  player: {fileID: 0}
 --- !u!114 &114738199309536598
 MonoBehaviour:
   m_ObjectHideFlags: 1

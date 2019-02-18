@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 114549608545323932}
   - component: {fileID: 114523905593734718}
   - component: {fileID: 114136858775488150}
+  - component: {fileID: 114717990735371648}
   m_Layer: 0
   m_Name: Rabbit Green
   m_TagString: Untagged
@@ -913,7 +914,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 0
   rewardExp: 40
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!114 &114297887098559336
 MonoBehaviour:
@@ -972,6 +974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114549608545323932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -990,6 +993,22 @@ MonoBehaviour:
     _baseValue: 0
   moveSpeed:
     _baseValue: 2
+--- !u!114 &114717990735371648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1317923552358778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114755765744477336
 MonoBehaviour:
   m_ObjectHideFlags: 1

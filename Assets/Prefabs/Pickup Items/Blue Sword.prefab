@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114884005641443494}
   - component: {fileID: 114142572779433330}
   - component: {fileID: 65307954121566740}
+  - component: {fileID: 114277270255926344}
   m_Layer: 0
   m_Name: Blue Sword
   m_TagString: Untagged
@@ -143,6 +144,22 @@ MonoBehaviour:
   radius: 2
   item: {fileID: 11400000, guid: 91e035d5eb9399b478932c0619f9e2d8, type: 2}
   lifetime: 30
+--- !u!114 &114277270255926344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684292525186948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114577796436757648
 MonoBehaviour:
   m_ObjectHideFlags: 1

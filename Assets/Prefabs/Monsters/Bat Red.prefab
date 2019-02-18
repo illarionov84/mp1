@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 114498962186100118}
   - component: {fileID: 114732728677338500}
   - component: {fileID: 114706379266047250}
+  - component: {fileID: 114406194673017798}
   m_Layer: 0
   m_Name: Bat Red
   m_TagString: Untagged
@@ -1429,8 +1430,25 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 1
   rewardExp: 80
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
+--- !u!114 &114406194673017798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1358634825711196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114453283062238178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1557,6 +1575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114782737463415868
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -2,8 +2,7 @@
 using UnityEngine.Networking;
 
 public class PlayerLoader : NetworkBehaviour {
-
-    [SerializeField] GameObject unitPrefab;
+    
     [SerializeField] PlayerController controller;
     [SerializeField] Player player;
 
@@ -19,11 +18,15 @@ public class PlayerLoader : NetworkBehaviour {
     }
 
     public Character CreateCharacter() {
+        // создаём персонажа по хешу из пользовательский данных
         UserAccount acc = AccountManager.GetAccount(connectionToClient);
+        GameObject unitPrefab = NetworkManager.singleton.spawnPrefabs.Find(x => x.GetComponent<NetworkIdentity>().assetId.Equals(acc.data.characterHash));
         GameObject unit = Instantiate(unitPrefab, acc.data.posCharacter, Quaternion.identity);
+        Character character = unit.GetComponent<Character>();
+        character.player = player;
         NetworkServer.Spawn(unit);
         TargetLinkCharacter(connectionToClient, unit.GetComponent<NetworkIdentity>());
-        return unit.GetComponent<Character>();
+        return character;
     }
 
     [TargetRpc]
@@ -32,7 +35,7 @@ public class PlayerLoader : NetworkBehaviour {
         player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), true);
         controller.SetCharacter(character, true);
     }
-
+    
     public override bool OnCheckObserver(NetworkConnection connection) {
         return false;
     }

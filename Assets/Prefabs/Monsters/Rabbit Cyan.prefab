@@ -34,6 +34,7 @@ GameObject:
   - component: {fileID: 114445862185065168}
   - component: {fileID: 114736208326207976}
   - component: {fileID: 114193209635280156}
+  - component: {fileID: 114371326312048374}
   m_Layer: 0
   m_Name: Rabbit Cyan
   m_TagString: Untagged
@@ -890,6 +891,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 95770678253485040}
   agent: {fileID: 195764117190002156}
+--- !u!114 &114371326312048374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1118355609743298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114445862185065168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -952,6 +969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114771321733249342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1018,7 +1036,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 0
   rewardExp: 40
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!137 &137367975838436848
 SkinnedMeshRenderer:

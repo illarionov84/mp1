@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 114731277732281158}
   - component: {fileID: 114539318500332772}
   - component: {fileID: 114865621061758234}
+  - component: {fileID: 114359827473404684}
   m_Layer: 0
   m_Name: Ghost Violete
   m_TagString: Untagged
@@ -514,7 +515,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 1
   rewardExp: 80
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!114 &114341931473403452
 MonoBehaviour:
@@ -549,6 +551,22 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
+--- !u!114 &114359827473404684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1122041558538024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114529572207367096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -593,6 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114593867629177116
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 114648957429475120}
   - component: {fileID: 114275751745284506}
   - component: {fileID: 114282040119047496}
+  - component: {fileID: 114211296925901342}
   m_Layer: 0
   m_Name: Ghost Brown
   m_TagString: Untagged
@@ -500,6 +501,22 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
+--- !u!114 &114211296925901342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1384660376614812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114275751745284506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -512,6 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114282040119047496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -548,7 +566,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 1
   rewardExp: 80
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!114 &114528386052995506
 MonoBehaviour:

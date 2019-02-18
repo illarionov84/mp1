@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114557271698789550}
   - component: {fileID: 114052542783015246}
   - component: {fileID: 65288861472444568}
+  - component: {fileID: 114950816161054374}
   m_Layer: 0
   m_Name: Green Sword
   m_TagString: Untagged
@@ -196,3 +197,19 @@ MonoBehaviour:
     i15: 150
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114950816161054374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1090733853360734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024

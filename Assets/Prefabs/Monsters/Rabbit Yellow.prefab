@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 114166222468563118}
   - component: {fileID: 114848556697050612}
   - component: {fileID: 114896029441485316}
+  - component: {fileID: 114069286564491018}
   m_Layer: 0
   m_Name: Rabbit Yellow
   m_TagString: Untagged
@@ -849,7 +850,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 0
   rewardExp: 40
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!114 &114061152301972122
 MonoBehaviour:
@@ -865,6 +867,22 @@ MonoBehaviour:
   animator: {fileID: 95322050536202814}
   unit: {fileID: 114007194932144070}
   combat: {fileID: 114848556697050612}
+--- !u!114 &114069286564491018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1545575518921324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114111386699080238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -970,6 +988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114860338661587752
 MonoBehaviour:
   m_ObjectHideFlags: 1

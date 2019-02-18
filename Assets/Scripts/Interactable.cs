@@ -4,12 +4,16 @@ using UnityEngine.Networking;
 public class Interactable : NetworkBehaviour {
 
     public Transform interactionTransform;
-    public float radius = 2f;
+    [SerializeField] float radius = 2f;
     
     bool _hasInteract = true;
     public bool hasInteract {
         get { return _hasInteract; }
         protected set { _hasInteract = value; }
+    }
+
+    public virtual float GetInteractDistance(GameObject user) {
+        return radius;
     }
 
     public virtual bool Interact(GameObject user) {

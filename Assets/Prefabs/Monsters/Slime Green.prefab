@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 114515650961441234}
   - component: {fileID: 114172223764939028}
   - component: {fileID: 114846719748506680}
+  - component: {fileID: 114394356903956946}
   m_Layer: 0
   m_Name: Slime Green
   m_TagString: Untagged
@@ -659,6 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114221884673482846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -672,6 +674,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disableBehaviours:
   - {fileID: 114446403014251396}
+--- !u!114 &114394356903956946
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1311791334559440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114446403014251396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -799,7 +817,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 0
   rewardExp: 40
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!114 &114846719748506680
 MonoBehaviour:

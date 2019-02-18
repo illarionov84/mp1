@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 114748287497134970}
   - component: {fileID: 114411454352249246}
   - component: {fileID: 114223577927976672}
+  - component: {fileID: 114813590600890574}
   m_Layer: 0
   m_Name: Ghost Green
   m_TagString: Untagged
@@ -546,6 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114442736535922638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -615,6 +617,22 @@ MonoBehaviour:
     _baseValue: 0
   moveSpeed:
     _baseValue: 2
+--- !u!114 &114813590600890574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1922813405114554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114901129540007140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -670,7 +688,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 1
   rewardExp: 80
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!137 &137609598264401342
 SkinnedMeshRenderer:

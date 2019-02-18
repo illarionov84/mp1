@@ -9,6 +9,7 @@ public class Unit : Interactable {
     public UnitStats stats { get { return _stats; } }
 
     protected Interactable focus;
+    protected float interactDistance;
     protected bool isDie;
 
     public delegate void UnitDenegate();
@@ -39,6 +40,11 @@ public class Unit : Interactable {
         }
     }
 
+    public override float GetInteractDistance(GameObject user) {
+        Combat combat = user.GetComponent<Combat>();
+        return base.GetInteractDistance(user) + (combat != null ? combat.attackDistance : 0f);
+    }
+
     public override bool Interact(GameObject user) {
         Combat combat = user.GetComponent<Combat>();
         if (combat != null) {
@@ -57,7 +63,8 @@ public class Unit : Interactable {
     protected virtual void SetFocus(Interactable newFocus) {
         if (newFocus != focus) {
             focus = newFocus;
-            motor.FollowTarget(newFocus);
+            interactDistance = focus.GetInteractDistance(gameObject);
+            motor.FollowTarget(newFocus, interactDistance);
         }
     }
 

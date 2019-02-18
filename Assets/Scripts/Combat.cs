@@ -6,8 +6,10 @@ public class Combat : NetworkBehaviour {
 
     [SerializeField] float attackSpeed = 1f;
 
+    public float attackDistance = 0f;
+
     UnitStats myStats;
-    float attackCooldown = 0f;
+    float attackCooldown;
 
     public delegate void CombatDenegate();
     [SyncEvent] public event CombatDenegate EventOnAttack;

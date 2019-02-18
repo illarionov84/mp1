@@ -31,8 +31,8 @@ public class UnitMotor : MonoBehaviour {
         }
     }
 
-    public void FollowTarget(Interactable newTarget) {
-        agent.stoppingDistance = newTarget.radius;
+    public void FollowTarget(Interactable newTarget, float interactDistance) {
+        agent.stoppingDistance = interactDistance;
         target = newTarget.interactionTransform;
     }
 

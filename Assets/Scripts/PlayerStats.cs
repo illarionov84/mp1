@@ -38,7 +38,7 @@ public class PlayerStats : UnitStats {
     }
 
     private void DamageChanged(int value) {
-        if (!damage.baseValue.Equals(data.statDamage)) data.statDamage = damage.baseValue;
+        if (damage.baseValue != data.statDamage) data.statDamage = damage.baseValue;
         if (_manager != null) _manager.damage = value;
     }
 

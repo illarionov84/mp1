@@ -409,8 +409,9 @@ GameObject:
   - component: {fileID: 114959568193876856}
   - component: {fileID: 65173918640044986}
   - component: {fileID: 114946216725293874}
+  - component: {fileID: 114045393858137856}
   m_Layer: 10
-  m_Name: Player Unit
+  m_Name: Swordman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1853,6 +1854,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114045393858137856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447184397885296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114093106670096506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1996,7 +2013,7 @@ MonoBehaviour:
   damage:
     _baseValue: 10
   armor:
-    _baseValue: 0
+    _baseValue: 2
   moveSpeed:
     _baseValue: 4
 --- !u!114 &114946216725293874
@@ -2025,6 +2042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!137 &137166504842748628
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

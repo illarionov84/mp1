@@ -696,6 +696,7 @@ GameObject:
   - component: {fileID: 114982326108473870}
   - component: {fileID: 114407365834442838}
   - component: {fileID: 114029128944222240}
+  - component: {fileID: 114088250762338318}
   m_Layer: 0
   m_Name: Bat Yellow
   m_TagString: Untagged
@@ -1425,6 +1426,22 @@ MonoBehaviour:
     rate: 70
   - item: {fileID: 11400000, guid: 91e035d5eb9399b478932c0619f9e2d8, type: 2}
     rate: 30
+--- !u!114 &114088250762338318
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1924259670301606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114091177142304432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1504,6 +1521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
 --- !u!114 &114678753875628836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1537,7 +1555,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 1
   rewardExp: 80
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!114 &114812597912962150
 MonoBehaviour:

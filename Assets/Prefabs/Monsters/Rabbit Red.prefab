@@ -156,6 +156,8 @@ GameObject:
   - component: {fileID: 114202844566850496}
   - component: {fileID: 114044127991433138}
   - component: {fileID: 114729406330775542}
+  - component: {fileID: 114997803831858814}
+  - component: {fileID: 114139841180456516}
   m_Layer: 0
   m_Name: Rabbit Red
   m_TagString: Untagged
@@ -841,6 +843,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSpeed: 1
+  attackDistance: 0
+--- !u!114 &114139841180456516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1299467647944474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1205285110, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 10
+  visUpdateInterval: 1
+  checkMethod: 0
+  forceHidden: 0
 --- !u!114 &114202844566850496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -994,7 +1012,8 @@ MonoBehaviour:
   maxMoveDelay: 15
   aggressive: 0
   rewardExp: 40
-  viewDistance: 5
+  viewDistance: 8
+  agroDistance: 5
   reviveDelay: 15
 --- !u!114 &114857252132932394
 MonoBehaviour:
@@ -1020,6 +1039,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fd93a39b9cc1646ae7ab470665f043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114997803831858814
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1299467647944474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346caafbec765294888eca56782eb114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visRange: 35
+  visUpdateInterval: 1
+  visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!137 &137960856957674384
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
