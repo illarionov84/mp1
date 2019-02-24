@@ -15,44 +15,58 @@ public class PlayerController : NetworkBehaviour {
 
     public void SetCharacter(Character character, bool isLocalPlayer) {
         this.character = character;
-        if (isLocalPlayer) cam.GetComponent<CameraController>().target = character.transform;
+        if (isLocalPlayer) {
+            cam.GetComponent<CameraController>().target = character.transform;
+            SkillsPanel.instance.SetSkills(character.unitSkills);
+        }
     }
 
     private void Update() {
         if (isLocalPlayer) {
-            if (character != null && !EventSystem.current.IsPointerOverGameObject()) {
-                // при нажатии на правую кнопку мыши пересещаемся в указанную точку
-                if (Input.GetMouseButtonDown(1)) {
-                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
+            if (character != null) {
+                if (!EventSystem.current.IsPointerOverGameObject()) {
+                    // при нажатии на правую кнопку мыши пересещаемся в указанную точку
+                    if (Input.GetMouseButtonDown(1)) {
+                        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                        RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit, 100f, movementMask)) {
-                        CmdSetMovePoint(hit.point);
+                        if (Physics.Raycast(ray, out hit, 100f, movementMask)) {
+                            CmdSetMovePoint(hit.point);
+                        }
                     }
-                }
-                // при нажатии на левую кнопку мыши взаимодйствуем с объектами
-                if (Input.GetMouseButtonDown(0)) {
-                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
+                    // при нажатии на левую кнопку мыши взаимодйствуем с объектами
+                    if (Input.GetMouseButtonDown(0)) {
+                        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                        RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit, 100f, ~(1 << LayerMask.NameToLayer("Player")))) {
-                        Interactable interactable = hit.collider.GetComponent<Interactable>();
-                        if (interactable != null) {
-                            CmdSetFocus(interactable.GetComponent<NetworkIdentity>());
+                        if (Physics.Raycast(ray, out hit, 100f, ~(1 << LayerMask.NameToLayer("Player")))) {
+                            Interactable interactable = hit.collider.GetComponent<Interactable>();
+                            if (interactable != null) {
+                                CmdSetFocus(interactable.GetComponent<NetworkIdentity>());
+                            }
                         }
                     }
                 }
+                // испольозование навыков
+                if (Input.GetButtonDown("Skill1")) CmdUseSkill(0);
+                if (Input.GetButtonDown("Skill2")) CmdUseSkill(1);
+                if (Input.GetButtonDown("Skill3")) CmdUseSkill(2);
             }
         }
     }
 
     [Command]
-    public void CmdSetMovePoint(Vector3 point) {
-        character.SetMovePoint(point);
+    void CmdSetMovePoint(Vector3 point) {
+        if (!character.unitSkills.inCast) character.SetMovePoint(point);
     }
 
     [Command]
-    public void CmdSetFocus(NetworkIdentity newFocus) {
-        character.SetNewFocus(newFocus.GetComponent<Interactable>());
+    void CmdSetFocus(NetworkIdentity newFocus) {
+        if (!character.unitSkills.inCast) character.SetNewFocus(newFocus.GetComponent<Interactable>());
+    }
+
+    [Command]
+    void CmdUseSkill(int skillNum) {
+        if (!character.unitSkills.inCast) character.UseSkill(skillNum);
     }
 }

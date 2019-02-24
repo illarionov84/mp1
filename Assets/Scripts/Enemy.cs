@@ -22,7 +22,7 @@ public class Enemy : Unit {
     float reviveTime;
     List<Character> enemies = new List<Character>();
 
-    void Start () {
+    void Start() {
         startPosition = transform.position;
         changePosTime = Random.Range(minMoveDelay, maxMoveDelay);
         reviveTime = reviveDelay;
@@ -44,19 +44,19 @@ public class Enemy : Unit {
 
     protected override void OnLiveUpdate() {
         base.OnLiveUpdate();
-        if (focus == null) {
+        if (_focus == null) {
             // блуждание
             Wandering(Time.deltaTime);
             // поиск цели если монстр агресивный
             if (aggressive) FindEnemy();
         } else {
-            float distance = Vector3.Distance(focus.interactionTransform.position, transform.position);
-            if (distance > viewDistance || !focus.hasInteract) {
+            float distance = Vector3.Distance(_focus.interactionTransform.position, transform.position);
+            if (distance > viewDistance || !_focus.hasInteract) {
                 // если цель далеко перестаём приследовать
                 RemoveFocus();
             } else if (distance <= interactDistance) {
                 // действие если цель взоне взаимодействия
-                if (!focus.Interact(gameObject)) RemoveFocus();
+                if (!_focus.Interact(gameObject)) RemoveFocus();
             }
         }
     }
@@ -103,18 +103,14 @@ public class Enemy : Unit {
         motor.MoveToPoint(curDistanation);
     }
 
-    public override bool Interact(GameObject user) {
-        if (base.Interact(user)) {
-            SetFocus(user.GetComponent<Interactable>());
-            return true;
-        }
-        return false;
-    }
-
     protected override void DamageWithCombat(GameObject user) {
         base.DamageWithCombat(user);
-        Character character = user.GetComponent<Character>();
-        if (character != null && !enemies.Contains(character)) enemies.Add(character); 
+        Unit enemy = user.GetComponent<Unit>();
+        if (enemy != null) {
+            SetFocus(enemy.GetComponent<Interactable>());
+            Character character = enemy as Character;
+            if (character != null && !enemies.Contains(character)) enemies.Add(character);
+        }
     }
 
     protected override void OnDrawGizmosSelected() {

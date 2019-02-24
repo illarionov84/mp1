@@ -9,7 +9,7 @@ public class Interactable : NetworkBehaviour {
     bool _hasInteract = true;
     public bool hasInteract {
         get { return _hasInteract; }
-        protected set { _hasInteract = value; }
+        set { _hasInteract = value; }
     }
 
     public virtual float GetInteractDistance(GameObject user) {

@@ -12,7 +12,9 @@ public class PlayerLoader : NetworkBehaviour {
 
     [Command]
     public void CmdCreatePlayer() {
+        // создаём персонажа
         Character character = CreateCharacter();
+        // проводим настройку персонажа на сервере
         player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), isLocalPlayer);
         controller.SetCharacter(character, isLocalPlayer);
     }
@@ -22,9 +24,12 @@ public class PlayerLoader : NetworkBehaviour {
         UserAccount acc = AccountManager.GetAccount(connectionToClient);
         GameObject unitPrefab = NetworkManager.singleton.spawnPrefabs.Find(x => x.GetComponent<NetworkIdentity>().assetId.Equals(acc.data.characterHash));
         GameObject unit = Instantiate(unitPrefab, acc.data.posCharacter, Quaternion.identity);
+        // указываем объект игрока для определения видимости персонажа
         Character character = unit.GetComponent<Character>();
         character.player = player;
+        // реплицируем персонажа
         NetworkServer.Spawn(unit);
+        // настраиваем персонажа на клиенте которому он пренадлежит
         TargetLinkCharacter(connectionToClient, unit.GetComponent<NetworkIdentity>());
         return character;
     }

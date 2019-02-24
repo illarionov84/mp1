@@ -1,14 +1,16 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 
 public class Unit : Interactable {
 
-    [SerializeField] protected UnitMotor motor;
-    [SerializeField] protected UnitStats _stats;
+    [SerializeField] UnitMotor _motor;
+    [SerializeField] UnitStats _stats;
     public UnitStats stats { get { return _stats; } }
+    public UnitMotor motor { get { return _motor; } }
+    public UnitSkills unitSkills;
 
-    protected Interactable focus;
+    protected Interactable _focus;
+    public Interactable focus { get { return _focus; } }
     protected float interactDistance;
     protected bool isDie;
 
@@ -18,8 +20,8 @@ public class Unit : Interactable {
     public event UnitDenegate EventOnRevive;
 
     public override void OnStartServer() {
-        motor.SetMoveSpeed(_stats.moveSpeed.GetValue());
-        _stats.moveSpeed.onStatChanged += motor.SetMoveSpeed;
+        _motor.SetMoveSpeed(_stats.moveSpeed.GetValue());
+        _stats.moveSpeed.onStatChanged += _motor.SetMoveSpeed;
     }
 
     void Update () {
@@ -56,21 +58,32 @@ public class Unit : Interactable {
         return base.Interact(user);
     }
 
+    public void UseSkill(int skillNum) {
+        if (!isDie && skillNum < unitSkills.Count) {
+            unitSkills[skillNum].Use(this);
+        }
+    }
+
     protected virtual void DamageWithCombat(GameObject user) {
         EventOnDamage();
     }
 
-    protected virtual void SetFocus(Interactable newFocus) {
-        if (newFocus != focus) {
-            focus = newFocus;
-            interactDistance = focus.GetInteractDistance(gameObject);
-            motor.FollowTarget(newFocus, interactDistance);
+    public void TakeDamage(GameObject user, int damage) {
+        _stats.TakeDamage(damage);
+        DamageWithCombat(user);
+    }
+
+    public virtual void SetFocus(Interactable newFocus) {
+        if (newFocus != _focus) {
+            _focus = newFocus;
+            interactDistance = _focus.GetInteractDistance(gameObject);
+            _motor.FollowTarget(newFocus, interactDistance);
         }
     }
 
-    protected virtual void RemoveFocus() {
-        focus = null;
-        motor.StopFollowingTarget();
+    public virtual void RemoveFocus() {
+        _focus = null;
+        _motor.StopFollowingTarget();
     }
     
     protected virtual void Die() {
@@ -80,7 +93,7 @@ public class Unit : Interactable {
         if (isServer) {
             hasInteract = false;
             RemoveFocus();
-            motor.MoveToPoint(transform.position);
+            _motor.MoveToPoint(transform.position);
             RpcDie();
         }
     }

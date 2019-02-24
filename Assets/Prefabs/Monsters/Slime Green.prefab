@@ -810,8 +810,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionTransform: {fileID: 4606259349746124}
   radius: 2
-  motor: {fileID: 114612557770530452}
+  _motor: {fileID: 114612557770530452}
   _stats: {fileID: 114515650961441234}
+  unitSkills:
+    _skills: []
   moveRadius: 5
   minMoveDelay: 4
   maxMoveDelay: 15
