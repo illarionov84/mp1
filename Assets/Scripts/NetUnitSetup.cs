@@ -6,11 +6,14 @@ public class NetUnitSetup : NetworkBehaviour {
     [SerializeField] MonoBehaviour[] disableBehaviours;
 
 	void Awake() {
-        for (int i = 0; i < disableBehaviours.Length; i++) {
-            disableBehaviours[i].enabled = false;
+        if (!hasAuthority) {
+            for (int i = 0; i < disableBehaviours.Length; i++) {
+                disableBehaviours[i].enabled = false;
+            }
         }
 	}
-    public override void OnStartServer() {
+
+    public override void OnStartAuthority() {
         for (int i = 0; i < disableBehaviours.Length; i++) {
             disableBehaviours[i].enabled = true;
         }

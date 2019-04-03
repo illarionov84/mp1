@@ -19,14 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4377037797723824}
-  - component: {fileID: 114738199309536598}
-  - component: {fileID: 114625727225070538}
   - component: {fileID: 114513586844110316}
   - component: {fileID: 114042316723602648}
-  - component: {fileID: 114986362945305988}
-  - component: {fileID: 114486939401254966}
-  - component: {fileID: 114075451423875548}
-  - component: {fileID: 114657307270108786}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -58,33 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa78ee26042b9c498df5b75c611cd7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 114986362945305988}
-  player: {fileID: 114738199309536598}
---- !u!114 &114075451423875548
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571480409289068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 978d25994e0a4ec4d90f1b32a23468d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
---- !u!114 &114486939401254966
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571480409289068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94be8db18a0280644bfe250e68fbd840, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  space: 8
-  player: {fileID: 0}
+  unitPrefab: {fileID: 1447184397885296, guid: f3c30ab9dad902742aa53f39b6a81fc1, type: 2}
 --- !u!114 &114513586844110316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,63 +85,3 @@ MonoBehaviour:
     i15: 60
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114625727225070538
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571480409289068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e219174deb14952458a224f21be8b98d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114657307270108786
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571480409289068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e31b4ff07973c164b9ae3818ed56b96b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  armor: 0
-  moveSpeed: 0
-  level: 0
-  statPoints: 0
-  exp: 0
-  nextLevelExp: 0
-  player: {fileID: 0}
---- !u!114 &114738199309536598
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571480409289068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d4ea7ddb5115574fb1c5b28f4383191, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 0}
-  _progress: {fileID: 0}
-  _inventory: {fileID: 0}
-  _equipment: {fileID: 0}
-  _statsManager: {fileID: 0}
---- !u!114 &114986362945305988
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571480409289068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5644c297c6304840ad17d102f858d4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementMask:
-    serializedVersion: 2
-    m_Bits: 512

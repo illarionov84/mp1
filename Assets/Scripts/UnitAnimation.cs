@@ -5,12 +5,12 @@ public class UnitAnimation : MonoBehaviour {
 
     [SerializeField] Animator animator;
     [SerializeField] NavMeshAgent agent;
-
-    void FixedUpdate() {
-        if (agent.velocity.magnitude == 0) {
-            animator.SetBool("Move", false);
+	
+	void FixedUpdate () {
+		if (!agent.hasPath) {
+            animator.SetBool("Moving", false);
         } else {
-            animator.SetBool("Move", true);
+            animator.SetBool("Moving", true);
         }
     }
 
